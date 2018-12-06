@@ -3,7 +3,6 @@ const schema = mongoose.Schema({
     issue_id: mongoose.Schema.Types.ObjectId,
     reporter_id: 'string',
     assignee_id: 'string',
-    status_id: 'string',
     description: 'string',
     name: 'string',
     estimation: 'string',

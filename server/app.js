@@ -6,6 +6,7 @@ const path = require('path');
 const DAO = require('./dao');
 const issues = require('./routes/issues');
 const users = require('./routes/users');
+const boards = require('./routes/boards');
 
 const PORT = 3000;
 
@@ -27,6 +28,7 @@ app.get('/', function (req, res) {
 });
 app.use('/api/issues', issues);
 app.use('/api/users', users);
+app.use('/api/boards', boards);
 
 /**
  * Start app

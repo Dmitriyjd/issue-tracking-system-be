@@ -1,5 +1,5 @@
 'use strict';
-var Users = require("../dao/users.js");
+const Users = require("../dao/users.js");
 
 
 function getUsers(req, res) {
@@ -26,7 +26,7 @@ function createUser(req, res) {
         res.status(400).json({errors: ["E-mail is require"]});
         return;
     }
-    Users.getUserById(req.body.id,(err, result) => {
+    Users.getUserById(req.body.id,() => {
             Users.createUser(req.body, (err, result) => {
                 res.status(201).json({ user: result });
             });

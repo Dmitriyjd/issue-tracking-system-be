@@ -2,34 +2,37 @@ const User = require("../models/user.js");
 const Role = require("../models/role.js");
 
 function getUsers(callback) {
-    User.find({}, (err, result) => {
-        callback && callback(err, result);
+    User.find({}, (allUsersListErrors, allUsersList) => {
+        callback && callback(allUsersListErrors, allUsersList);
     });
 }
 
 function getUserById(id, callback){
-    User.find({id}, (err, result) => {
-        callback && callback(err, result);
+    User.find({id}, (gottenUserErrors, gottenUser) => {
+        callback && callback(gottenUserErrors, gottenUser);
     });
 }
 
 function createUser(user, callback) {
     const userFull = user;
-    userFull.team_id = '';
     Role.find({role_name: 'user'}, (defaultRoleErrors, defaultRole) => {
         if (defaultRole.length === 0) {
             Role.create({role_name: 'user'}, (createdDefaultRoleErrors, createdDefaultRole) => {
-                    userFull.role_id = createdDefaultRole.role_id;
+                    userFull.role_id = createdDefaultRole._id;
                     User.create(userFull, (createdUserErrors, createdUser) => {
                         callback && callback(createdUserErrors, createdUser);
                     });
                 }
             )
         }
-        else{userFull.role_id = result.role_id;
-        User.create(user_full, (errr, result3) => {
-            callback && callback(errr, result3);
-        });}
+        else {
+            Role.find({role_name: 'user'}, (defaultRoleErrors, [defaultRole1]) => {
+                userFull.role_id = defaultRole1._id;
+                User.create(userFull, (createdUserErrors, createdUser) => {
+                    callback && callback(createdUserErrors, createdUser);
+                });
+            })
+        }
     });
 
 }

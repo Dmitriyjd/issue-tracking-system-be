@@ -6,7 +6,7 @@ const schema = mongoose.Schema({
     email: 'string',
     password: 'string',
     role_id: 'string',
-    team_id: 'string'
+    board_id: 'string'
 });
 
 const User = mongoose.model('User',schema);
