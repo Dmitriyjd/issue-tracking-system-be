@@ -1,6 +1,6 @@
 'use strict';
 const Users = require("../dao/users.js");
-
+const { createJWToken } = require('../security/auth');
 
 function getUsers(req, res) {
     Users.getUsers(
@@ -27,10 +27,25 @@ function createUser(req, res) {
         return;
     }
     Users.getUserById(req.body.id,() => {
-            Users.createUser(req.body, (err, result) => {
-                res.status(201).json({ user: result });
-            });
+        Users.createUser(req.body, (err, result) => {
+            res.status(201).json({ user: result });
+        });
     });
 }
 
-module.exports = { createUser, getUserById, getUsers };
+function logIn(req, res) {
+    Users.getUser(req.body,(error, user) => {
+        if (!req.body.email || !req.body.password) {
+            res.status(403).json({ errors: ['Username or password is empty'] });
+        }
+
+        if (error || !user) {
+            res.status(403).json({ errors: ['Wrong username or password'] });
+        } else {
+            const token = createJWToken({ data:{ id: user._id } });
+            res.status(201).json({ id: user._id, token });
+        }
+    });
+}
+
+module.exports = { createUser, getUserById, getUsers, logIn };

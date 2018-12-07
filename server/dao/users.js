@@ -1,9 +1,15 @@
-const User = require("../models/user.js");
-const Role = require("../models/role.js");
+const User = require('../models/user');
+const Role = require('../models/role');
 
 function getUsers(callback) {
     User.find({}, (allUsersListErrors, allUsersList) => {
         callback && callback(allUsersListErrors, allUsersList);
+    });
+}
+
+function getUser(user, callback) {
+    User.findOne(user, (userFindingError, foundUser) => {
+        callback && callback(userFindingError, foundUser);
     });
 }
 
@@ -34,10 +40,6 @@ function createUser(user, callback) {
             })
         }
     });
-
 }
 
-
-
-
-module.exports = { getUsers, getUserById, createUser };
+module.exports = { getUsers, getUser, getUserById, createUser };
