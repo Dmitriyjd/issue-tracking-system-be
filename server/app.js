@@ -11,12 +11,12 @@ const boards = require('./routes/boards');
 const PORT = 3000;
 
 const app = express();
-const dao = new DAO({host: 'localhost', port: 27017, name: 'dataBase'});
+const dao = new DAO({ host: 'localhost', port: 27017, name: 'dataBase' });
 
 /**
  * Middleware
  */
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public/build')));
 

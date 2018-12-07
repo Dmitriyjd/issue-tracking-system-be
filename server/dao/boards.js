@@ -24,4 +24,4 @@ function createColumns(columnNames, boardId, callback) {
     } )
 }
 
-module.exports = {createBoard};
+module.exports = { createBoard };

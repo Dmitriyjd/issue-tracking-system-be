@@ -7,8 +7,8 @@ function createIssue(issue, userId, columnId, callback) {
 }
 
 function getIssuesByColumnId(id, callback){
-    Issue.find({ column_id:id }, (foundIssuesErrors, [foundIssues]) => {
-        callback && callback(foundIssuesErrors, [foundIssues]);
+    Issue.find({ column_id:id }, (foundIssuesErrors, foundIssues) => {
+        callback && callback(foundIssuesErrors, foundIssues);
     });
 }
 
@@ -27,10 +27,10 @@ function removeIssue(id, callback){
 function editIssue(id, issue, userId, callback){
     const fullIssue = issue;
     fullIssue.assignee_id = userId;
-    Issue.findOneAndUpdate({ issue_id:id }, fullIssue,{new:true}, (updatedIssueErrors, updatedIssue) => {
+    Issue.findOneAndUpdate({ issue_id:id }, fullIssue,{ new:true }, (updatedIssueErrors, updatedIssue) => {
         callback && callback(updatedIssueErrors, updatedIssue);
     });
 }
 
 
-module.exports = {getIssuesByColumnId, getIssue, createIssue, removeIssue, editIssue};
+module.exports = { getIssuesByColumnId, getIssue, createIssue, removeIssue, editIssue };

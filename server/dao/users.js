@@ -8,16 +8,16 @@ function getUsers(callback) {
 }
 
 function getUserById(id, callback){
-    User.find({id}, (gottenUserErrors, gottenUser) => {
+    User.findOne({ id }, (gottenUserErrors, gottenUser) => {
         callback && callback(gottenUserErrors, gottenUser);
     });
 }
 
 function createUser(user, callback) {
     const userFull = user;
-    Role.find({role_name: 'user'}, (defaultRoleErrors, defaultRole) => {
+    Role.find({ role_name: 'user' }, (defaultRoleErrors, defaultRole) => {
         if (defaultRole.length === 0) {
-            Role.create({role_name: 'user'}, (createdDefaultRoleErrors, createdDefaultRole) => {
+            Role.create({ role_name: 'user' }, (createdDefaultRoleErrors, createdDefaultRole) => {
                     userFull.role_id = createdDefaultRole._id;
                     User.create(userFull, (createdUserErrors, createdUser) => {
                         callback && callback(createdUserErrors, createdUser);
@@ -26,7 +26,7 @@ function createUser(user, callback) {
             )
         }
         else {
-            Role.find({role_name: 'user'}, (defaultRoleErrors, [defaultRole1]) => {
+            Role.findOne({ role_name: 'user' }, (defaultRoleErrors, defaultRole1) => {
                 userFull.role_id = defaultRole1._id;
                 User.create(userFull, (createdUserErrors, createdUser) => {
                     callback && callback(createdUserErrors, createdUser);
@@ -40,4 +40,4 @@ function createUser(user, callback) {
 
 
 
-module.exports = {getUsers, getUserById, createUser};
+module.exports = { getUsers, getUserById, createUser };

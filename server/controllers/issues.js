@@ -4,7 +4,7 @@ const Issues = require("../dao/issues.js");
 function getIssuesByColumnId(req, res) {
     Issues.getIssuesByColumnId(req.body.columnId,(gotIssuesErrors, [gotIssues]) => {
         if (gotIssues.length === 0) {
-            res.status(404).json({errors: ["Column not exist"]})
+            res.status(404).json({ errors: ["Column not exist"] })
         }
         else {
             res.status(200).json({ issue: [gotIssues] });
@@ -31,10 +31,10 @@ function createIssue(req, res) {
 function removeIssue(req, res) {
     Issues.getIssue(req.body.id,(gotIssueErrors, gotIssue) => {
         if (gotIssue.length === 0) {
-            res.status(404).json({errors: ["Issue not exist"]});
+            res.status(404).json({ errors: ["Issue not exist"] });
         }
         else {
-            Issues.removeIssue(req.params.id, () => {
+            Issues.removeIssue(req.params.issueId, () => {
                 res.status(200).json({ status: 'OK' });
             });
         }
@@ -44,7 +44,8 @@ function removeIssue(req, res) {
 function editIssue(req, res) {
     Issues.getIssue(req.body._id,(boardIssuesErrors, boardIssues) => {
         if (boardIssues.length === 0) {
-            res.status(404).json({errors: ["Issue not found"]});
+            res.status(404).json({errors: ["Issue not found"]
+            });
         }
         else{
             Issues.editIssue(req.body._id, req.body, req.body.userId, (err, result) => {
@@ -57,4 +58,4 @@ function editIssue(req, res) {
 
 
 
-module.exports = {getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue};
+module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue };

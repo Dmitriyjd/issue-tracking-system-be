@@ -13,7 +13,7 @@ function getUsers(req, res) {
 function getUserById(req, res) {
     Users.getUserById(req.params.id,(err, result) => {
         if (result.length === 0) {
-            res.status(404).json({errors: ["User not exist"]})
+            res.status(404).json({ errors: ["User not exist"] })
         }
         else {
             res.status(200).json({ author: result[0] });
@@ -33,4 +33,4 @@ function createUser(req, res) {
     });
 }
 
-module.exports = {createUser, getUserById, getUsers};
+module.exports = { createUser, getUserById, getUsers };
