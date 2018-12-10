@@ -10,6 +10,7 @@
     "express": "^4.14.0",
     "figlet": "^1.2.0",
     "inquirer": "^1.2.1",
+    "jsonwebtoken": "^8.4.0",
     "minimist": "^1.2.0",
     "mongoose": "^5.3.14",
     "preferences": "^0.2.1"

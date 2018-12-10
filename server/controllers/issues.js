@@ -42,10 +42,9 @@ function removeIssue(req, res) {
 }
 
 function editIssue(req, res) {
-    Issues.getIssue(req.body._id,(boardIssuesErrors, boardIssues) => {
-        if (boardIssues.length === 0) {
-            res.status(404).json({errors: ["Issue not found"]
-            });
+    Issues.getIssue(req.body._id,(boardIssuesError, boardIssue) => {
+        if (boardIssue === null) {
+            res.status(404).json({errors: ["Issue not found"]});
         }
         else{
             Issues.editIssue(req.body._id, req.body, req.body.userId, (err, result) => {
@@ -54,8 +53,5 @@ function editIssue(req, res) {
         }
     });
 }
-
-
-
 
 module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue };
