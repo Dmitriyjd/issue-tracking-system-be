@@ -5,9 +5,10 @@ const controller = require('../controllers/issues');
 
 const router = express.Router();
 
-router.get('/:boardId', controller.getIssuesByBoardId);
-router.put('/:id', controller.editIssue);
+router.get('/:columnId', controller.getIssuesByColumnId);
+router.get('/:issueId', controller.getIssue);
+router.put('/:issueId', controller.editIssue);
 router.post('/', controller.createIssue);
-router.delete('/:id', controller.removeIssue);
+router.delete('/:issueId', controller.removeIssue);
 
 module.exports = router;

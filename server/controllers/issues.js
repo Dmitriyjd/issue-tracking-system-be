@@ -1,29 +1,40 @@
 'use strict';
 const Issues = require("../dao/issues.js");
 
-function getIssuesByBoardId(req, res) {
-    Issues.getIssuesByBoardId(req.params.id,(err, result) => {
-        if (result.length === 0) {
-            res.status(404).json({errors: ["Board not exist"]})
+function getIssuesByColumnId(req, res) {
+    Issues.getIssuesByColumnId(req.body.columnId,(gotIssuesErrors, [gotIssues]) => {
+        if (gotIssues.length === 0) {
+            res.status(404).json({ errors: ["Column not exist"] })
         }
         else {
-            res.status(200).json({ issue: result[0] });
+            res.status(200).json({ issue: [gotIssues] });
         }
     });
 }
+
+function getIssue(req,res) {
+    Issues.getIssue(req.body.id,(gotIssueErrors,gotIssue)=>{
+        if(gotIssue.length === 0){
+            res.status(404).json({ errors:['Issue not exist'] })
+        }
+        else{
+            res.status(200).json({ issue:gotIssue })
+        }
+    })
+}
 function createIssue(req, res) {
-    Issues.createIssue(req.body, (err, result) => {
+    Issues.createIssue(req.body, req.body.columnId, req.body.userId, (err, result) => {
         res.status(201).json({ issue: result });
     });
 }
 
 function removeIssue(req, res) {
-    Issues.getIssuesByBoardId(req.params.id,(gotIssueErrors, gotIssue) => {
+    Issues.getIssue(req.body.id,(gotIssueErrors, gotIssue) => {
         if (gotIssue.length === 0) {
-            res.status(404).json({errors: ["Issue not exist"]});
+            res.status(404).json({ errors: ["Issue not exist"] });
         }
         else {
-            Issues.removeIssue(req.params.id, () => {
+            Issues.removeIssue(req.params.issueId, () => {
                 res.status(200).json({ status: 'OK' });
             });
         }
@@ -31,23 +42,16 @@ function removeIssue(req, res) {
 }
 
 function editIssue(req, res) {
-    Issues.getIssuesByIssueId(req.body._id,(boardIssuesErrors, boardIssues) => {
-        if (boardIssues.length !== 0) {
-            res.status(400).json({errors: ["Issue with this id already exist"]});
+    Issues.getIssue(req.body._id,(boardIssuesError, boardIssue) => {
+        if (boardIssue === null) {
+            res.status(404).json({errors: ["Issue not found"]});
         }
-        Issues.getIssuesByBoardId(req.params.id,(err, result) => {
-            if (result.length === 0) {
-                res.status(404).json({errors: ["Board with this id not exist"]});
-            } else {
-                Issues.editIssue(req.params.id, req.body, (err, result) => {
-                    res.status(200).json({ issue: result });
-                });
-            }
-        });
+        else{
+            Issues.editIssue(req.body._id, req.body, req.body.userId, (err, result) => {
+                res.status(200).json({issue: result});
+            });
+        }
     });
 }
 
-
-
-
-module.exports = {getIssuesByBoardId,editIssue, createIssue, removeIssue};
+module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue };

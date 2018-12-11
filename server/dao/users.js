@@ -1,40 +1,45 @@
-const User = require("../models/user.js");
-const Role = require("../models/role.js");
+const User = require('../models/user');
+const Role = require('../models/role');
 
 function getUsers(callback) {
-    User.find({}, (err, result) => {
-        callback && callback(err, result);
+    User.find({}, (allUsersListErrors, allUsersList) => {
+        callback && callback(allUsersListErrors, allUsersList);
+    });
+}
+
+function getUser(user, callback) {
+    User.findOne(user, (userFindingError, foundUser) => {
+        callback && callback(userFindingError, foundUser);
     });
 }
 
 function getUserById(id, callback){
-    User.find({id}, (err, result) => {
-        callback && callback(err, result);
+    User.findOne({ id }, (gottenUserErrors, gottenUser) => {
+        callback && callback(gottenUserErrors, gottenUser);
     });
 }
 
 function createUser(user, callback) {
     const userFull = user;
-    userFull.team_id = '';
-    Role.find({role_name: 'user'}, (defaultRoleErrors, defaultRole) => {
+    Role.find({ role_name: 'user' }, (defaultRoleErrors, defaultRole) => {
         if (defaultRole.length === 0) {
-            Role.create({role_name: 'user'}, (createdDefaultRoleErrors, createdDefaultRole) => {
-                    userFull.role_id = createdDefaultRole.role_id;
+            Role.create({ role_name: 'user' }, (createdDefaultRoleErrors, createdDefaultRole) => {
+                    userFull.role_id = createdDefaultRole._id;
                     User.create(userFull, (createdUserErrors, createdUser) => {
                         callback && callback(createdUserErrors, createdUser);
                     });
                 }
             )
         }
-        else{userFull.role_id = result.role_id;
-        User.create(user_full, (errr, result3) => {
-            callback && callback(errr, result3);
-        });}
+        else {
+            Role.findOne({ role_name: 'user' }, (defaultRoleErrors, defaultRole1) => {
+                userFull.role_id = defaultRole1._id;
+                User.create(userFull, (createdUserErrors, createdUser) => {
+                    callback && callback(createdUserErrors, createdUser);
+                });
+            })
+        }
     });
-
 }
 
-
-
-
-module.exports = {getUsers, getUserById, createUser};
+module.exports = { getUsers, getUser, getUserById, createUser };

@@ -10,7 +10,7 @@ function DAO(config) {
     this.daoConfig = 'mongodb://' + config.host + ':' + config.port + '/' + config.name;
     DAO.prototype.connect = callback => {
         if (mongoose.connection.readyState === 0) {
-            mongoose.connect(this.daoConfig, {})
+            mongoose.connect(this.daoConfig, { })
                 .then(callback)
                 .catch(callback);
         }
