@@ -2,6 +2,7 @@
   "name": "itools-candidate-test",
   "description": "JS Test Project for candidate",
   "dependencies": {
+    "issue-tracking-system-fe": "https://github.com/Xerotico/issue-tracking-system-fe#master",
     "body-parser": "^1.15.2",
     "chalk": "^1.1.3",
     "clear": "0.0.1",
