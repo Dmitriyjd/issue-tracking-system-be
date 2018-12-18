@@ -34,11 +34,12 @@ function createUser(req, res) {
 }
 
 function logIn(req, res) {
-    Users.getUser(req.body,(error, user) => {
-        if (!req.body.email || !req.body.password) {
-            res.status(403).json({ errors: ['Username or password is empty'] });
-        }
+    if (!req.body.email || !req.body.password) {
+        res.status(403).json({ errors: ['Username or password is empty'] });
+        return;
+    }
 
+    Users.getUser(req.body,(error, user) => {
         if (error || !user) {
             res.status(403).json({ errors: ['Wrong username or password'] });
         } else {

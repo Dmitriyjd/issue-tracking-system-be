@@ -29,6 +29,17 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '../web/index.html'));
 });
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+    if (req.method === 'OPTIONS') {
+        res.status(204).end();
+        return;
+    }
+
+    next();
+});
 const router = express.Router();
 router.all('*', verifyJWT_MW);
 app.use('*', router);

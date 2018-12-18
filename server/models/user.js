@@ -5,8 +5,7 @@ const schema = mongoose.Schema({
     last_name: 'string',
     email: 'string',
     password: 'string',
-    role_id: 'string',
-    board_id: 'string'
+    role_id: 'string'
 });
 
 const User = mongoose.model('User',schema);
