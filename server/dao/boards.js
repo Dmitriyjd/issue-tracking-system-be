@@ -30,14 +30,29 @@ function createPriorities(priorityNames, callback){
 }
 
 function createColumns(columnNames, boardId, callback) {
-    Column.create({ column_name:columnNames[0], board_id:boardId },()=>{
-        if(columnNames.length === 1){
+    Column.create({ column_name:columnNames[0], board_id:boardId },( ) => {
+        if (columnNames.length === 1) {
             callback && callback();
         }
-        else{
+        else {
             createColumns(columnNames.slice(1),boardId,callback);
         }
     } )
 }
 
-module.exports = { createBoard };
+function removeBoard(boardId, callback){
+    Board.remove({board_id: boardId}, (removeBoardErrors, removeBoard) => {
+        callback && callback(removeBoardErrors, removeBoard);
+    })
+}
+
+function getBoardsByUserId(id, callback){
+    User_Board.find({ user_id:id }, (foundIssuesErrors, foundIssues) => {
+        Board.find({ board_id: foundIssues.board_id}, (gotBoardsErrors, gotBoards) =>{
+            callback && callback(gotBoardsErrors, gotBoards);
+        });
+    });
+}
+
+
+module.exports = { createBoard, getBoardsByUserId, removeBoard};

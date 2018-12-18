@@ -14,12 +14,7 @@ function getIssuesByColumnId(req, res) {
 
 function getIssue(req,res) {
     Issues.getIssue(req.body.id,(gotIssueErrors,gotIssue)=>{
-        if(gotIssue.length === 0){
-            res.status(404).json({ errors:['Issue not exist'] })
-        }
-        else{
             res.status(200).json({ issue:gotIssue })
-        }
     })
 }
 
