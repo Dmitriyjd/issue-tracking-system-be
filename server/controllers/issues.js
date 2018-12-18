@@ -22,6 +22,7 @@ function getIssue(req,res) {
         }
     })
 }
+
 function createIssue(req, res) {
     Issues.createIssue(req.body, req.body.columnId, req.body.userId, (err, result) => {
         res.status(201).json({ issue: result });
