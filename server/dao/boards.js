@@ -18,8 +18,8 @@ function createBoard(boardName, userId , callback) {
     })
 }
 
-function shareAccessToBoard(boardId, userId, callback){
-    User_Board.create( {board_id:boardId, user_id:userId}, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
+function shareAccessToBoard(boardId, email, callback){
+    User_Board.create( {board_id:boardId, email: email }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
         callback && callback(sharingAccessToBoardErrors,sharingAccessToBoard);
     })
 }

@@ -17,7 +17,7 @@ function getBoards(req,res){
 }
 
 function shareAccessToBoard(req,res) {
-    Boards.shareAccessToBoard( req.body.boardId, req.body.userId, (sharedAccessToBoardErrors, sharedAccessToBoard) => {
+    Boards.shareAccessToBoard( req.body.boardId, req.body.email, (sharedAccessToBoardErrors, sharedAccessToBoard) => {
         if(!sharedAccessToBoard){
             res.status(404).json( { errors: sharedAccessToBoardErrors })
         }
