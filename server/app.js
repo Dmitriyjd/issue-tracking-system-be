@@ -8,6 +8,7 @@ const issues = require('./routes/issues');
 const users = require('./routes/users');
 const boards = require('./routes/boards');
 const priorities = require('./routes/priorities');
+const columns = require('./routes/columns');
 const {verifyJWT_MW} = require('./security/auth');
 
 const PORT = 3000;
@@ -44,6 +45,7 @@ app.use(function(req, res, next) {
 const router = express.Router();
 router.all('*', verifyJWT_MW);
 app.use('*', router);
+app.use('/api/columns', columns);
 app.use('/api/issues', issues);
 app.use('/api/users', users);
 app.use('/api/boards', boards);

@@ -6,6 +6,8 @@ const controller = require('../controllers/boards');
 const router = express.Router();
 
 router.post('/', controller.createBoard);
+router.post('/addUser/:boardId', controller.shareAccessToBoard);
+router.get('/', controller.getBoards);
 router.get('/user_id', controller.getBoardsByUserId);
 router.delete('/board_id', controller.removeBoard);
 
