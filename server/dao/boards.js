@@ -2,6 +2,7 @@ const Board = require("../models/board");
 const Column = require("../models/column");
 const User_Board = require('../models/user_board');
 const Priority = require('../models/priority');
+const User = require('../models/user');
 
 function createBoard(boardName, userId , callback) {
    Board.create({ board_name: boardName } ,(addBoardErrors, addBoard)=>{
@@ -15,6 +16,21 @@ function createBoard(boardName, userId , callback) {
            });
 
        })
+    })
+}
+
+function shareAccessToBoard(boardId, email, callback){
+    User.findOne({ email: email }, (foundUserErrors, foundUser) => {
+        User_Board.create( {board_id:boardId, email: foundUser.email }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
+            callback && callback(sharingAccessToBoardErrors,sharingAccessToBoard);
+        })
+    });
+
+}
+
+function getBoards(callback) {
+    Board.find({}, (foundBoardErrors, foundBoards) => {
+        callback && callback(foundBoardErrors, foundBoards);
     })
 }
 
@@ -55,4 +71,4 @@ function getBoardsByUserId(id, callback){
 }
 
 
-module.exports = { createBoard, getBoardsByUserId, removeBoard};
+module.exports = { createBoard, getBoardsByUserId, removeBoard, getBoards, shareAccessToBoard};

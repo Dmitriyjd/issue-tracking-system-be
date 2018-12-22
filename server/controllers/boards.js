@@ -10,6 +10,22 @@ function createBoard(req,res) {
         })
     }
 }
+function getBoards(req,res){
+    Boards.getBoards( (foundBoardsErrors, foundBoards) => {
+        res.status(200).json({ foundBoards })
+    })
+}
+
+function shareAccessToBoard(req,res) {
+    Boards.shareAccessToBoard( req.body.boardId, req.body.email, (sharedAccessToBoardErrors, sharedAccessToBoard) => {
+        if(!sharedAccessToBoard){
+            res.status(404).json( { errors: sharedAccessToBoardErrors })
+        }
+        else{
+            res.status(200).json({ sharedAccessToBoard })
+        }
+    })
+}
 
 function removeBoard(req,res) {
     Boards.removeBoard(req.body.id, (removeBoardErrors, removeBoard) =>{
@@ -23,9 +39,9 @@ function getBoardsByUserId(req,res) {
             res.status(404).json({errors: ['No boards found']})
         }
         else {
-            res.status(200).json({ boards: gotBoards})
+            res.status(200).json({ boards: gotBoards })
         }
     });
 }
 
-module.exports = { createBoard,getBoardsByUserId, removeBoard };
+module.exports = { createBoard,getBoardsByUserId, removeBoard, getBoards , shareAccessToBoard};
