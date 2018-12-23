@@ -18,6 +18,18 @@ function createBoard(boardName, userId , callback) {
     })
 }
 
+function shareAccessToBoard(boardId, email, callback){
+    User_Board.create( {board_id:boardId, email: email }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
+        callback && callback(sharingAccessToBoardErrors,sharingAccessToBoard);
+    })
+}
+
+function getBoards(callback) {
+    Board.find( (foundBoardErrors, foundBoards) => {
+        callback && callback(foundBoardErrors, foundBoards);
+    })
+}
+
 function createPriorities(priorityNames, callback){
     Priority.create({priority_name: priorityNames[0]},(err, result) => {
         if(priorityNames.length === 1){
@@ -55,4 +67,4 @@ function getBoardsByUserId(id, callback){
 }
 
 
-module.exports = { createBoard, getBoardsByUserId, removeBoard};
+module.exports = { createBoard, getBoardsByUserId, removeBoard, getBoards, shareAccessToBoard};
