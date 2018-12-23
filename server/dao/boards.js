@@ -21,9 +21,17 @@ function createBoard(boardName, userId , callback) {
 
 function shareAccessToBoard(boardId, email, callback){
     User.findOne({ email: email }, (foundUserErrors, foundUser) => {
-        User_Board.create( {board_id:boardId, email: foundUser.email }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
-            callback && callback(sharingAccessToBoardErrors,sharingAccessToBoard);
-        })
+        if(foundUserErrors || !foundUser) {
+            callback && callback(foundUserErrors, foundUser);
+        }
+        else {
+            User_Board.create({
+                board_id: boardId,
+                email: foundUser.email
+            }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
+                callback && callback(sharingAccessToBoardErrors, sharingAccessToBoard);
+            })
+        }
     });
 
 }
