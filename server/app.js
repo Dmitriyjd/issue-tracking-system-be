@@ -21,15 +21,11 @@ const dao = new DAO({ host: 'localhost', port: 27017, name: 'dataBase' });
  */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../public/build')));
+app.use(express.static(path.join(__dirname, '../node_modules/issue-tracking-system-fe/build/')));
 
 /**
  * Routes
  */
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '../web/index.html'));
-});
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -44,12 +40,16 @@ app.use(function(req, res, next) {
 });
 const router = express.Router();
 router.all('*', verifyJWT_MW);
-app.use('*', router);
+app.use('/api', router);
 app.use('/api/columns', columns);
 app.use('/api/issues', issues);
 app.use('/api/users', users);
 app.use('/api/boards', boards);
 app.use('/api/priorities', priorities);
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../node_modules/issue-tracking-system-fe/build/index.html'));
+});
 
 /**
  * Start app

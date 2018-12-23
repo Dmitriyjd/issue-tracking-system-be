@@ -24,6 +24,12 @@ function createIssue(req, res) {
     });
 }
 
+function getIssues(req,res){
+    Issues.getIssues( (foundIssuesErrors, foundIssues) => {
+        res.status(200).json({ foundIssues })
+    })
+}
+
 function removeIssue(req, res) {
     Issues.getIssue(req.body.id,(gotIssueErrors, gotIssue) => {
         if (gotIssue.length === 0) {
@@ -50,4 +56,4 @@ function editIssue(req, res) {
     });
 }
 
-module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue };
+module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue, getIssues };

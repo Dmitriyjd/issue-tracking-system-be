@@ -2,6 +2,7 @@ const Board = require("../models/board");
 const Column = require("../models/column");
 const User_Board = require('../models/user_board');
 const Priority = require('../models/priority');
+const User = require('../models/user');
 
 function createBoard(boardName, userId , callback) {
    Board.create({ board_name: boardName } ,(addBoardErrors, addBoard)=>{
@@ -19,13 +20,24 @@ function createBoard(boardName, userId , callback) {
 }
 
 function shareAccessToBoard(boardId, email, callback){
-    User_Board.create( {board_id:boardId, email: email }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
-        callback && callback(sharingAccessToBoardErrors,sharingAccessToBoard);
-    })
+    User.findOne({ email: email }, (foundUserErrors, foundUser) => {
+        if(foundUserErrors || !foundUser) {
+            callback && callback(foundUserErrors, foundUser);
+        }
+        else {
+            User_Board.create({
+                board_id: boardId,
+                email: foundUser.email
+            }, (sharingAccessToBoardErrors, sharingAccessToBoard) => {
+                callback && callback(sharingAccessToBoardErrors, sharingAccessToBoard);
+            })
+        }
+    });
+
 }
 
 function getBoards(callback) {
-    Board.find( (foundBoardErrors, foundBoards) => {
+    Board.find({}, (foundBoardErrors, foundBoards) => {
         callback && callback(foundBoardErrors, foundBoards);
     })
 }

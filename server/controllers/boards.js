@@ -12,7 +12,7 @@ function createBoard(req,res) {
 }
 function getBoards(req,res){
     Boards.getBoards( (foundBoardsErrors, foundBoards) => {
-        res.status(200).json({foundBoards})
+        res.status(200).json({ foundBoards })
     })
 }
 
