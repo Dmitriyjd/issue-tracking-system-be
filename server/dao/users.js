@@ -13,8 +13,8 @@ function getUser(user, callback) {
     });
 }
 
-function getUserById(id, callback){
-    User.findOne({ id }, (gottenUserErrors, gottenUser) => {
+function getUserById(userId, callback){
+    User.findOne({ _id:userId }, (gottenUserErrors, gottenUser) => {
         callback && callback(gottenUserErrors, gottenUser);
     });
 }
