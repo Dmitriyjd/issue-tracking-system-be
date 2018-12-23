@@ -5,7 +5,7 @@ function verifyJWT_MW(req, res, next) {
     if (WHITELIST_URLS.includes(req.originalUrl)) {
         next();
     } else {
-        const token = req.body.token || req.query.token;
+        const token = req.body.token || req.query.token || req.headers.token;
 
         verifyJWTToken(token)
             .then((decodedToken) => {

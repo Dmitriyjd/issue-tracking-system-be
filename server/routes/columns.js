@@ -5,6 +5,6 @@ const controller = require('../controllers/columns');
 
 const router = express.Router();
 
-router.get('/board_id', controller.getColumnsByBoardsId);
+router.get('/:board_id', controller.getColumnsByBoardsId);
 
-module.exports = {router};
+module.exports = router;
