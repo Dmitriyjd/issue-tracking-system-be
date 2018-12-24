@@ -6,8 +6,8 @@ function createIssue(issue, userId, columnId, callback) {
     })
 }
 
-function getIssuesByColumnId(id, callback){
-    Issue.find({ column_id: id }, (foundIssuesErrors, foundIssues) => {
+function getIssuesByColumnId( query, callback){
+    Issue.find(query, (foundIssuesErrors, foundIssues) => {
         callback && callback(foundIssuesErrors, foundIssues);
     });
 }
