@@ -10,7 +10,7 @@
     "express": "^4.14.0",
     "figlet": "^1.2.0",
     "inquirer": "^1.2.1",
-    "issue-tracking-system-fe": "https://github.com/Xerotico/issue-tracking-system-fe#add-board-page-view",
+    "issue-tracking-system-fe": "https://github.com/Xerotico/issue-tracking-system-fe#master",
     "jsonwebtoken": "^8.4.0",
     "minimist": "^1.2.0",
     "mongoose": "^5.3.14",
