@@ -1,13 +1,13 @@
 'use strict';
 const Issues = require("../dao/issues.js");
 
-function getIssuesByColumnId(req, res) {
-    Issues.getIssuesByColumnId(req.body.columnId,(gotIssuesErrors, [gotIssues]) => {
+function getIssuesByQuery(req, res) {
+    Issues.getIssuesByQuery(req.query,(gotIssuesErrors, gotIssues) => {
         if (gotIssues.length === 0) {
             res.status(404).json({ errors: ["Column not exist"] })
         }
         else {
-            res.status(200).json({ issue: [gotIssues] });
+            res.status(200).json({ gotIssues });
         }
     });
 }
@@ -56,4 +56,4 @@ function editIssue(req, res) {
     });
 }
 
-module.exports = { getIssuesByColumnId, getIssue, editIssue, createIssue, removeIssue, getIssues };
+module.exports = { getIssuesByQuery, getIssue, editIssue, createIssue, removeIssue, getIssues };

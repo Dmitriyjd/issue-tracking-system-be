@@ -6,8 +6,8 @@ function createIssue(issue, userId, columnId, callback) {
     })
 }
 
-function getIssuesByColumnId(id, callback){
-    Issue.find({ column_id: id }, (foundIssuesErrors, foundIssues) => {
+function getIssuesByQuery( query, callback){
+    Issue.find( query, (foundIssuesErrors, foundIssues) => {
         callback && callback(foundIssuesErrors, foundIssues);
     });
 }
@@ -39,4 +39,4 @@ function editIssue(id, issue, userId, callback){
 }
 
 
-module.exports = { getIssuesByColumnId, getIssue, createIssue, removeIssue, editIssue, getIssues };
+module.exports = { getIssuesByQuery, getIssue, createIssue, removeIssue, editIssue, getIssues };
