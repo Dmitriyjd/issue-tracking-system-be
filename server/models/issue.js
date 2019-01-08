@@ -7,7 +7,7 @@ const schema = mongoose.Schema({
     name: 'string',
     estimation: 'string',
     column_id: 'string',
-    priority_id: 'string'
+    priority_id: 'string',
 });
 
 const Issue = mongoose.model('Issue',schema);

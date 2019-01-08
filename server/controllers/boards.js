@@ -12,7 +12,7 @@ function createBoard(req,res) {
 }
 function getBoards(req,res){
     Boards.getBoards( (foundBoardsErrors, foundBoards) => {
-        res.status(200).json({ foundBoards })
+        res.status(200).json({ board_array:foundBoards })
     })
 }
 
@@ -34,12 +34,12 @@ function removeBoard(req,res) {
 }
 
 function getBoardsByUserId(req,res) {
-    Boards.getBoardsByUserId(req.body.id, (gotBoardsErrors, gotBoards) => {
+    Boards.getBoardsByUserId(req.params.id, (gotBoardsErrors, gotBoards) => {
         if (gotBoards.length === 0) {
             res.status(404).json({errors: ['No boards found']})
         }
         else {
-            res.status(200).json({ boards: gotBoards })
+            res.status(200).json({ board_array: gotBoards })
         }
     });
 }

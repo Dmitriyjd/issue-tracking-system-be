@@ -37,7 +37,7 @@ function shareAccessToBoard(boardId, email, callback){
 }
 
 function getBoards(callback) {
-    Board.find({}, (foundBoardErrors, foundBoards) => {
+    Board.find( (foundBoardErrors, foundBoards) => {
         callback && callback(foundBoardErrors, foundBoards);
     })
 }
@@ -70,9 +70,9 @@ function removeBoard(boardId, callback){
     })
 }
 
-function getBoardsByUserId(id, callback){
-    User_Board.find({ user_id:id }, (foundIssuesErrors, foundIssues) => {
-        Board.find({ board_id: foundIssues.board_id}, (gotBoardsErrors, gotBoards) =>{
+function getBoardsByUserId(user_id, callback){
+    User_Board.find({ user_id: user_id }, (foundBoardsErrors, foundBoards) => {
+        Board.find({ board_id: foundBoards.board_id}, (gotBoardsErrors, gotBoards) =>{
             callback && callback(gotBoardsErrors, gotBoards);
         });
     });

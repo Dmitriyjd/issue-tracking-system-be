@@ -26,7 +26,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/app.js",
-    "lint": "./node_modules/.bin/eslint ./server",
+    "lint": "eslint ./server",
     "build-fe": "cd ./node_modules/ && cd ./issue-tracking-system-fe/ && yarn && yarn build"
   }
 }

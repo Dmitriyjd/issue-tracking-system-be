@@ -11,13 +11,8 @@ function getUsers(req, res) {
 }
 
 function getUserById(req, res) {
-    Users.getUserById(req.params.userId,(err, result) => {
-        if (result.length === 0) {
-            res.status(404).json({ errors: ["User not exist"] })
-        }
-        else {
-            res.status(200).json({ author: result[0] });
-        }
+    Users.getUserById( req.params.id ,(err, result) => {
+        res.status(200).json({ result});
     });
 }
 
