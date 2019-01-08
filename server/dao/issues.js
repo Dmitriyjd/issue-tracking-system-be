@@ -1,7 +1,7 @@
 const Issue = require("../models/issue");
 
-function createIssue(issue, userId, columnId, callback) {
-    Issue.create({...issue, reporter_id:userId, column_id:columnId}, (createIssueErrors, createIssue)=>{
+function createIssue(issue, user_id, column_id, callback) {
+    Issue.create({...issue, reporter_id:user_id, column_id:column_id}, (createIssueErrors, createIssue)=>{
         callback && callback(createIssueErrors,createIssue)
     })
 }
