@@ -4,7 +4,7 @@ const schema = mongoose.Schema({
     reporter_id: 'string',
     assignee_id: 'string',
     description: 'string',
-    name: 'string',
+    issue_name: 'string',
     estimation: 'string',
     column_id: 'string',
     priority_id: 'string',

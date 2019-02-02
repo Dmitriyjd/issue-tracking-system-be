@@ -1,8 +1,17 @@
 const User = require('../models/user');
 const Role = require('../models/role');
 
+function deletePassword(data){
+    return(
+      data.map( item => {
+        item.password = "undefined"
+    }))
+
+}
 function getUsers(callback) {
     User.find({}, (allUsersListErrors, allUsersList) => {
+        deletePassword(allUsersList);
+        console.log(allUsersList);
         callback && callback(allUsersListErrors, allUsersList);
     });
 }

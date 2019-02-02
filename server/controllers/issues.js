@@ -7,7 +7,7 @@ function getIssuesByQuery(req, res) {
             res.status(404).json({ errors: ["Issue"] })
         }
         else {
-            res.status(200).json({ gotIssues });
+            res.status(200).json({ result: gotIssues });
         }
     });
 }
@@ -19,7 +19,7 @@ function getIssue(req,res) {
 }
 
 function createIssue(req, res) {
-    Issues.createIssue(req.body,req.body.user_id, req.body.column_id, (err, result) => {
+    Issues.createIssue(req.body, req.body.user_id, (err, result) => {
         res.status(201).json({ issue: result });
     });
 }
