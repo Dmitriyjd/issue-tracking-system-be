@@ -4,8 +4,8 @@ const { createJWToken } = require('../security/auth');
 
 function getUsers(req, res) {
     Users.getUsers(
-        function (err, result) {
-            res.send({ users: result });
+        (err, result) =>{
+            res.status(200).json ({ users_array: result });
         }
     )
 }
